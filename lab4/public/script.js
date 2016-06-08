@@ -1,4 +1,4 @@
-
+"use strict";
 /**
  * Requests a new board state from the server's /data route.
  * 
@@ -9,7 +9,7 @@ function getData(cb){
         console.log("Response for /data: "+textStatus);  
 
         // handle any errors here....
-
+        console.log(data);
         // draw the board....
         cb(data);  
 
@@ -42,6 +42,33 @@ function drawBoard(state){
     // we make a jQuery object out of this, so that 
     // we can manipulate it via calls to the jQuery API. 
     var svg = $(makeSVG(W, H));
+    
+    for(var i = H/(state.size); i < H; i += H/(state.size)){
+        svg.append(makeLine(0, i, W, i));
+    }
+    for(var i = W/(state.size ); i < W; i += W/(state.size)){
+        svg.append(makeLine(i, 0, i, H));
+    }
+    
+    svg.append(makeRectangle(0, 0, W, H/(2*(state.size )), "Peru"));
+    svg.append(makeRectangle(0, H - H/(2*(state.size )), W, H/(2*(state.size )), "Peru"));
+    svg.append(makeRectangle(0, 0, W/(2*(state.size )), H, "Peru"));
+    svg.append(makeRectangle(W - W/(2*(state.size )), 0, W/(2*(state.size )), H, "Peru"));
+    
+    for(var i = 1; i < (state.board.length); i++){
+        var distance = H/(state.size );
+        for(var j = 1; j < (state.size ); j++){
+            switch (state.board[i][j]){
+                case 1:
+                    svg.append(makeCircle(i*distance, j*distance, distance/2, "black"));
+                break;
+                case 2:
+                    svg.append(makeCircle(i*distance, j*distance, distance/2, "lightGray"));
+                break;
+                default:
+            }
+        }
+    }
 
     // TODO: Implement board drawing. 
     
@@ -55,7 +82,7 @@ function drawBoard(state){
 }
 
 function init(){
-
+    
     // do page load things here...
 
     console.log("Initalizing Page...."); 

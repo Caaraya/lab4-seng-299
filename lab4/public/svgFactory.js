@@ -1,3 +1,4 @@
+"use strict";
 /** 
  * This file contains functions for creating new SVG objects.
  * 
@@ -56,7 +57,7 @@ function makeRectangle(x, y, w, h, c){
    rect.setAttribute("x", x);
    rect.setAttribute("y", y);
    rect.setAttribute("width", w);
-   rect.setAttribute("height", w);
+   rect.setAttribute("height", h);
    rect.setAttribute("fill", c);
 
    return rect; 
@@ -76,10 +77,12 @@ function makeCircle(x, y, r, c){
 
    var circ = document.createElementNS(SVGNameSpace, "circle"); 
    
-   circ.setAttribute("x", x);
-   circ.setAttribute("y", y);
+   circ.setAttribute("cx", x);
+   circ.setAttribute("cy", y);
    circ.setAttribute("r", r);
-   circ.setAttribute("c", c);
+   circ.setAttribute("fill", c);
+   circ.setAttribute("stroke", "Peru");
+   circ.setAttribute("stroke-width", 2);
 
     // TODO: Implement me. Checkout docs at: http://www.w3schools.com/svg/svg_circle.asp
 
